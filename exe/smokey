@@ -1,0 +1,5 @@
+#! /usr/bin/env ruby
+
+require "smokey_gem"
+
+SmokeyGem::CLI.start(ARGV)
