@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 require "thor"
 require "fileutils"
 
@@ -5,25 +6,16 @@ module SmokeyGem
   # Defines the CLI interface to smokey functions
   class CLI < Thor
     desc "init", "Initialize the current directory as a Smokey repo."
+    option :force
     def init
-      config = Configuration.load "./smokey_config.rb"
-
-      FileUtils.mkpath(%w(smokey setup))
-
-      dockerfile = Templates["Dockerfile"]
-      File.write("Dockerfile", dockerfile)
-
-      File.write("docker-compose.yml", DockerCompose.new(config.docker_compose).to_yaml)
-
-      smokey_setup = Templates["smokey_setup"]
-      File.write("smokey/setup", smokey_setup)
-      FileUtils.chmod("+x", "smokey/setup")
-
-      dockerignore = Templates[".dockerignore"]
-      File.write(".dockerignore", dockerignore)
-      # Write template out for Dockerfile
-      # Create smokey directory
-      # Write template out for setup script
+      config = Templates["smokey_config.rb"]
+      if File.exist?("smokey_config.rb") && !options[:force]
+        print "Smokey has already been initialized! (maybe you want to --force)\n"
+        exit(1)
+      else
+        File.write("smokey_config.rb", config.result)
+        write_git_ignorance
+      end
     end
 
     desc "readme", "Display readme for Smokey apps."
@@ -34,9 +26,20 @@ module SmokeyGem
       end
     end
 
-    desc "setup", "Run the setup script."
+    desc "setup", "Run all setup"
     def setup
-      system "smokey/setup" or fail "#{$?}"
+      config = Configuration.load "./smokey_config.rb"
+      config.run_setup
+    end
+
+    private
+
+    def write_git_ignorance
+      gitignore = File.read(".gitignore")
+      gitignore << "Dockerfile\n" unless /^Dockerfile$/ =~ gitignore
+      gitignore << ".dockerignore\n" unless /^\.dockerignore$/ =~ gitignore
+      gitignore << "docker-compose.yml\n" unless /^docker-compose\.yml$/ =~ gitignore
+      File.write(".gitignore", gitignore)
     end
   end
 end
