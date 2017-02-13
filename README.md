@@ -1,6 +1,10 @@
 # SmokeyGem
 
-Smokey helps prevent code fires! Also he makes it easy to run complex multi-service apps
+Smokey helps prevent code fires! Also he makes it easy to run complex multi-service apps with Docker.
+
+Maintainers:
+* [Carl Thuringer](https://github.com/carlthuringer)
+* [Jason Sisk](https://github.com/sisk)
 
 ## Installation
 
@@ -20,8 +24,20 @@ Or install it yourself as:
 
 ## Usage
 
-* `init` - Initialize a repo for use with Smokey.
+You must have docker and the AWS CLI installed and configured. You will need to know your AWS account access token ID 
+and Secret.
 
+[**Get Docker**](https://www.docker.com/products/overview)
+
+
+```bash
+brew install awscli
+aws configure --profile smokey
+```
+
+* `init` - Initialize a repo for use with Smokey. Creates the `smokey_config.rb`
+* `readme` - Display the Usage readme
+* `setup` - Generates the docker files from the configuration, runs all setup hooks, then boots the application.
 
 ## Development
 
