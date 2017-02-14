@@ -6,6 +6,10 @@ Maintainers:
 * [Carl Thuringer](https://github.com/carlthuringer)
 * [Jason Sisk](https://github.com/sisk)
 
+This gem is currently heavily focused on Ruby and Rails projects relevant within 
+the Belly organization. The eventual goal is for this to become language and 
+framework agnostic, though the configuration language will be Ruby. 
+
 ## Installation
 
 Add this line to your application's Gemfile:

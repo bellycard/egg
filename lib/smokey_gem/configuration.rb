@@ -31,26 +31,30 @@ module SmokeyGem
     end
 
     def run_setup
-      dockerfile = Templates["Dockerfile"]
-      File.write("Dockerfile", dockerfile.result(binding))
+      write_templates
 
-      File.write("docker-compose.yml", docker_compose.to_yaml)
-      #
-      # dockerignore = Templates[".dockerignore"]
-      # File.write(".dockerignore", dockerignore)
-      #
       # # 'or fail $?' is an idiom. system calls set $? to the Process Status,
       # so we will raise an exception to that tune.
       # system "eval $(aws --profile smokey ecr get-login)" or fail "#{$?}"
       #
       # # Speed up build by pulling from amazon.
-      # system "docker-compose pull" or fail "#{$?}"
-      # system "docker-compose build" or fail "#{$?}"
-      #
-      # FileUtils.cp ".env.template", ".env"
-      #
-      # system "docker-compose up -d"
-      # print "App is now running at http://localhost:3000"
+      system "docker-compose pull"
+      system "docker-compose build" or raise $CHILD_STATUS # rubocop:disable Style/AndOr
+
+      FileUtils.cp ".env.template", ".env"
+
+      system "docker-compose up -d"
+      print "App is now running at http://localhost:3000"
+    end
+
+    def write_templates
+      dockerfile = Templates["Dockerfile"]
+      File.write("Dockerfile", dockerfile.result(binding))
+
+      File.write("docker-compose.yml", docker_compose.to_yaml)
+
+      dockerignore = Templates[".dockerignore"]
+      File.write(".dockerignore", dockerignore)
     end
   end
 end

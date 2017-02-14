@@ -16,3 +16,4 @@ Style/StringLiterals:
 
 Metrics/LineLength:
   Max: 85
+  IgnoreCopDirectives: true

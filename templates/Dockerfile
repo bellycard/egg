@@ -20,6 +20,7 @@ ENV APP_HOME /app
 RUN mkdir $APP_HOME
 WORKDIR $APP_HOME
 
+ADD .ruby-version $APP_HOME/
 ADD Gemfile* $APP_HOME/
 
 ENV BUNDLE_GEMFILE=$APP_HOME/Gemfile \

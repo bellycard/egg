@@ -21,7 +21,8 @@ module SmokeyGem
     desc "readme", "Display readme for Smokey apps."
     def readme
       # Print out the readme
-      File.open("doc/README.md", "r") do |f|
+      readme_path = File.expand_path("../../../doc/README.md", __FILE__)
+      File.open(readme_path, "r") do |f|
         print(f.read)
       end
     end
