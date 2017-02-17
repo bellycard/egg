@@ -5,8 +5,6 @@ machine:
       ruby-2.4.0
 
 dependencies:
-  pre:
-    - cp .env.ci .env.test
   post:
     - export PULL_REQUEST_URL=${CI_PULL_REQUEST}
     - export PULL_REQUEST_ID=`echo $PULL_REQUEST_URL | grep -o -E ‘[0–9]+$’ | head -1 | sed -e ‘s/^0\+//’`
