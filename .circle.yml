@@ -1,0 +1,25 @@
+machine:
+  # Version of ruby to use
+  ruby:
+    version:
+      ruby-2.4.0
+
+dependencies:
+  pre:
+    - cp .env.ci .env.test
+  post:
+    - export PULL_REQUEST_URL=${CI_PULL_REQUEST}
+    - export PULL_REQUEST_ID=`echo $PULL_REQUEST_URL | grep -o -E ‘[0–9]+$’ | head -1 | sed -e ‘s/^0\+//’`
+
+checkout:
+  post:
+    - git fetch origin --depth=1000000
+
+test:
+  override:
+    - >
+      if [ -n "${CI_PULL_REQUEST}" ]; then
+        bundle exec pronto run -c origin/master -f github_pr github_status --exit-code
+      else
+        bundle exec pronto run -c origin/master -f github github_status --exit-code
+      fi

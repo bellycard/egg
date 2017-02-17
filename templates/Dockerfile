@@ -2,6 +2,7 @@ FROM ruby:<%= ruby_version %>
 
 # Update packages
 RUN apt-get update -qq && apt-get upgrade -qqy
+RUN apt-get -qqy install cmake
 <% if ssh_support %>
 RUN apt-get -qqy install openssh-server rsync
 RUN mkdir -p /var/run/sshd
