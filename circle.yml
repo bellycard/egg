@@ -16,9 +16,9 @@ checkout:
 test:
   override:
     - bundle exec rspec -r rspec_junit_formatter --format RspecJunitFormatter -o $CIRCLE_TEST_REPORTS/rspec-junit.xml --format documentation $stdout:
-      parallel: true
-      files:
-        - spec/**/*_spec.rb
+        parallel: true
+        files:
+          - spec/**/*_spec.rb
     - >
       if [ -n "${CI_PULL_REQUEST}" ]; then
         bundle exec pronto run -c origin/master -f github_pr github_status --exit-code
