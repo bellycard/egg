@@ -31,6 +31,7 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency "bundler", "~> 1.13"
   spec.add_development_dependency "rake", "~> 10.0"
   spec.add_development_dependency "rspec", "~> 3.5.0"
+  spec.add_development_dependency "rspec_junit_formatter", "~> 0.2.3"
   spec.add_development_dependency "pronto", "~> 0.8.0"
   spec.add_development_dependency "pronto-rubocop", "~> 0.8.0"
 end
