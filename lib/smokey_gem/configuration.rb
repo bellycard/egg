@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 require "yaml"
 require "fileutils"
+require "dotenv_util"
 
 module SmokeyGem
   # Reads and Processes the smokey_config.rb file.
@@ -45,7 +46,11 @@ module SmokeyGem
       system "docker-compose pull"
       system "docker-compose build" or raise $CHILD_STATUS # rubocop:disable Style/AndOr
 
-      FileUtils.cp ".env.template", ".env"
+      File.open(".env.template", "r") do |dotenv_file|
+        util = DotenvUtil.new(dotenv_file)
+        util.set("DATABASE_URL", database_url) if database_url
+        File.write(".env", util.generate_env.read)
+      end
 
       system "docker-compose up -d"
       print "App is now running at http://localhost:3000"

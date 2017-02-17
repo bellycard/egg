@@ -24,7 +24,7 @@ class DotenvUtil
 
   def parse_env_file
     @env_file.read.split.each_with_object({}) do |line, hash|
-      hash.store(*line.match(/^([A-Z_]+)="?(.+)"?$/).captures)
+      hash.store(*line.match(/^([A-Z_]+)="?(.+)?"?$/).captures)
       hash
     end
   end

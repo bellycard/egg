@@ -5,8 +5,9 @@ require "dotenv_util"
 RSpec.describe DotenvUtil do
   let(:env_file) do
     file = Tempfile.new
-    file << "FAVORITE_FOOD=POTATO\n"
-    file << "FAVORITE_COLOR=RED\n"
+    file << %(FAVORITE_FOOD=POTATO\n)
+    file << %(FAVORITE_COLOR="RED"\n)
+    file << %(NO_CONTENT=\n)
     file.tap(&:rewind)
   end
 
