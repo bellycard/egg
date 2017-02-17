@@ -2,6 +2,7 @@
 require "yaml"
 require "fileutils"
 require "dotenv_util"
+require "docker_compose"
 
 module SmokeyGem
   # Reads and Processes the smokey_config.rb file.
@@ -36,33 +37,28 @@ module SmokeyGem
     end
 
     def run_setup
-      write_files
+      write_docker_files
 
-      # # 'or fail $?' is an idiom. system calls set $? to the Process Status,
-      # so we will raise an exception to that tune.
-      # system "eval $(aws --profile smokey ecr get-login)" or fail "#{$?}"
-      #
-      # # Speed up build by pulling from amazon.
-      system "docker-compose pull"
-      system "docker-compose build" or raise $CHILD_STATUS # rubocop:disable Style/AndOr
+      system("docker-compose pull")
+      system("docker-compose build") || raise($CHILD_STATUS)
 
       dotenv.set("DATABASE_URL", database_url) if database_url
       File.write(".env", dotenv.generate_env)
 
-      system "docker-compose up -d"
+      system("docker-compose up -d")
       print "App is now running at http://localhost:3000"
     end
 
     private
 
-    def write_files
+    def write_docker_files
       dockerfile = Templates["Dockerfile"]
       File.write("Dockerfile", dockerfile.result(binding))
 
-      File.write("docker-compose.yml", docker_compose.to_yaml)
-
       dockerignore = Templates[".dockerignore"]
       File.write(".dockerignore", dockerignore)
+
+      File.write("docker-compose.yml", docker_compose.to_yaml)
     end
   end
 end
