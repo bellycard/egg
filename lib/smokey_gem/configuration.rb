@@ -23,20 +23,20 @@ module SmokeyGem
                   :ssh_support,
                   :ruby_version,
                   :supervisor,
-                  :database_url
+                  :database_url,
+                  :dotenv
 
     def initialize(&configuration_block)
-      self.docker_compose = DockerCompose.new(
-        YAML.safe_load(SmokeyGem::Templates["docker-compose.yml"].result)
-      )
+      self.docker_compose = DockerCompose.new
       self.ssh_support = false
       self.ruby_version = "2.4"
+      self.dotenv = DotenvUtil.new(File.read(".env.template"))
       instance_eval(&configuration_block)
       self
     end
 
     def run_setup
-      write_templates
+      write_files
 
       # # 'or fail $?' is an idiom. system calls set $? to the Process Status,
       # so we will raise an exception to that tune.
@@ -46,11 +46,8 @@ module SmokeyGem
       system "docker-compose pull"
       system "docker-compose build" or raise $CHILD_STATUS # rubocop:disable Style/AndOr
 
-      File.open(".env.template", "r") do |dotenv_file|
-        util = DotenvUtil.new(dotenv_file)
-        util.set("DATABASE_URL", database_url) if database_url
-        File.write(".env", util.generate_env.read)
-      end
+      dotenv.set("DATABASE_URL", database_url) if database_url
+      File.write(".env", dotenv.generate_env)
 
       system "docker-compose up -d"
       print "App is now running at http://localhost:3000"
@@ -58,7 +55,7 @@ module SmokeyGem
 
     private
 
-    def write_templates
+    def write_files
       dockerfile = Templates["Dockerfile"]
       File.write("Dockerfile", dockerfile.result(binding))
 
