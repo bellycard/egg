@@ -1,5 +1,5 @@
 # frozen_string_literal: true
-require "docker_compose"
+require "smokey_gem/docker_compose"
 
 RSpec.describe DockerCompose do
   it "generates a valid, empty docker_compose file" do
@@ -21,7 +21,6 @@ RSpec.describe DockerCompose do
 
     dc_yaml = dc.to_yaml
     hash = YAML.safe_load(dc_yaml)
-    p hash
     service = hash.dig("services", "app")
     expect(service["build"]).to eq(".")
     expect(service["command"]).to eq("rails s -p 3000")

@@ -2,7 +2,6 @@
 require "yaml"
 require "fileutils"
 require "dotenv_util"
-require "docker_compose"
 
 module SmokeyGem
   # Reads and Processes the smokey_config.rb file.

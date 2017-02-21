@@ -26,6 +26,10 @@ class DockerCompose
 
     output.to_yaml
   end
+
+  def service(name, attributes)
+    services << Service.new(name, attributes)
+  end
 end
 
 require_relative "docker_compose/service"

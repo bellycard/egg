@@ -22,10 +22,11 @@ class DockerCompose
 
     def to_yaml
       service_mapping = m
-      service_mapping.children.concat([sc("build"), qsc("."),
-                                       sc("command"), qsc(command),
-                                       sc("ports"), seq(ports.map { |x| qsc x }),
-                                       sc("volumes"), seq(volumes.map { |x| qsc x })])
+
+      service_mapping.children.concat [sc("build"), qsc(".")] if dockerfile
+      service_mapping.children.concat [sc("command"), qsc(command)] if command
+      service_mapping.children.concat [sc("ports"), seq(ports.map { |x| qsc x })] if ports
+      service_mapping.children.concat [sc("volumes"), seq(volumes.map { |x| qsc x })] if volumes
 
       [sc(name), service_mapping]
     end
