@@ -1,10 +1,8 @@
 # frozen_string_literal: true
 require "yaml"
-require "shrink"
 
 # Wraps the generation of Docker Compose file
 class DockerCompose
-  include Shrink
   attr_reader :docker_compose,
               :services
 
@@ -17,13 +15,10 @@ class DockerCompose
   end
 
   def to_yaml
-    output = Psych::Nodes::Stream.new
-    output.children << doc = Psych::Nodes::Document.new
-    doc.children << m([
-                        [sc("version"), qsc("2")],
-                        [sc("services"), m(services.flat_map(&:to_yaml))]
-
-                      ])
+    output = { "version" => "2" }
+    output["services"] = services.each_with_object({}) do |service, hash|
+      hash[service.name] = service.to_hash
+    end
 
     output.to_yaml
   end
