@@ -23,8 +23,7 @@ module SmokeyGem
                   :ssh_support,
                   :ruby_version,
                   :supervisor,
-                  :dotenv,
-                  :after_startup
+                  :dotenv
 
     def initialize(&configuration_block)
       self.docker_compose = DockerCompose.new
@@ -36,7 +35,11 @@ module SmokeyGem
     end
 
     def after_startup(&block)
-      self.after_startup = block
+      @after_startup = block
+    end
+
+    def docker_exec(app, command)
+      system("docker-compose exec #{app} #{command}") || fail($?)
     end
 
     def run_setup
@@ -49,11 +52,12 @@ module SmokeyGem
 
       system("docker-compose up -d")
 
-      if after_startup
-        after_startup.call
+      if @after_startup
+        print "Running after-startup block\n"
+        @after_startup.call
       end
 
-      print "App is now running at http://localhost:3000"
+      print "App is now running at http://localhost:3000\n"
     end
 
     private
