@@ -28,7 +28,9 @@ class DockerCompose
   end
 
   def service(name, attributes)
-    services << Service.new(name, attributes)
+    service = Service.new(name, attributes)
+    services << service
+    service
   end
 end
 
