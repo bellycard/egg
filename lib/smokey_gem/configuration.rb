@@ -23,7 +23,6 @@ module SmokeyGem
                   :ssh_support,
                   :ruby_version,
                   :supervisor,
-                  :database_url,
                   :dotenv
 
     def initialize(&configuration_block)
@@ -41,7 +40,6 @@ module SmokeyGem
       system("docker-compose pull")
       system("docker-compose build") || raise($CHILD_STATUS)
 
-      dotenv.set("DATABASE_URL", database_url) if database_url
       File.write(".env", dotenv.generate_env)
 
       system("docker-compose up -d")
