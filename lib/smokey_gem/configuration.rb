@@ -39,7 +39,7 @@ module SmokeyGem
     end
 
     def docker_exec(app, command)
-      system("docker-compose exec #{app} #{command}") || fail($?)
+      system("docker-compose exec #{app} #{command}") || raise($CHILD_STATUS)
     end
 
     def run_setup

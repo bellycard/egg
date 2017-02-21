@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 # Shrink implements a micro-dsl for building Psych ASTs
 module Shrink
-  def m(*children)
+  def m(children)
     mapping = Psych::Nodes::Mapping.new
     mapping.children.concat(children.flatten)
     mapping

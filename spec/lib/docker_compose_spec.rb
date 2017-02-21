@@ -12,11 +12,11 @@ RSpec.describe DockerCompose do
 
   it "allows one to define an app service built from a local dockerfile" do
     dc = DockerCompose.new
-    dc.service("app",
-               dockerfile: "woop-woop",
-               command: "rails s -p 3000",
-               ports: ["3000:3000"],
-               volumes: [".:/app"])
+    app = dc.service("app")
+    app.dockerfile = "Dockerfile"
+    app.command = "rails s -p 3000"
+    app.ports = ["3000:3000"]
+    app.volumes = [".:/app"]
 
     dc_yaml = dc.to_yaml
     hash = YAML.safe_load(dc_yaml)
@@ -30,7 +30,8 @@ RSpec.describe DockerCompose do
   it "allows me to define a service based on an image" do
     dc = DockerCompose.new
 
-    dc.service("db", image: "postgres")
+    db = dc.service("db")
+    db.image = "postgres"
     dc_yaml = dc.to_yaml
     hash = YAML.safe_load(dc_yaml)
 
@@ -40,14 +41,14 @@ RSpec.describe DockerCompose do
 
   it "allows me to define links between services" do
     dc = DockerCompose.new
-    app = dc.service("app",
-                     dockerfile: "woop-woop",
-                     command: "rails s -p 3000",
-                     ports: ["3000:3000"],
-                     volumes: [".:/app"])
+    app = dc.service("app")
+    app.dockerfile = "Dockerfile"
+    app.command = "rails s -p 3000"
+    app.ports = ["3000:3000"]
+    app.volumes = [".:/app"]
 
-    db = dc.service("db", image: "postgres")
-
+    db = dc.service("db")
+    db.image = "postgres"
     app.link(db)
     dc_yaml = dc.to_yaml
     hash = YAML.safe_load(dc_yaml)
