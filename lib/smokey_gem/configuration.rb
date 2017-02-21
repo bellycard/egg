@@ -23,7 +23,8 @@ module SmokeyGem
                   :ssh_support,
                   :ruby_version,
                   :supervisor,
-                  :dotenv
+                  :dotenv,
+                  :after_startup
 
     def initialize(&configuration_block)
       self.docker_compose = DockerCompose.new
@@ -32,6 +33,10 @@ module SmokeyGem
       self.dotenv = DotenvUtil.new(File.read(".env.template"))
       instance_eval(&configuration_block)
       self
+    end
+
+    def after_startup(&block)
+      self.after_startup = block
     end
 
     def run_setup
@@ -43,6 +48,11 @@ module SmokeyGem
       File.write(".env", dotenv.generate_env)
 
       system("docker-compose up -d")
+
+      if after_startup
+        after_startup.call
+      end
+
       print "App is now running at http://localhost:3000"
     end
 
@@ -52,7 +62,7 @@ module SmokeyGem
       dockerfile = Templates["Dockerfile"]
       File.write("Dockerfile", dockerfile.result(binding))
 
-      dockerignore = Templates[".dockerignore"]
+      dockerignore = Templates[".dockerignore"].result(binding)
       File.write(".dockerignore", dockerignore)
 
       File.write("docker-compose.yml", docker_compose.to_yaml)

@@ -30,7 +30,7 @@ class DockerCompose
     end
 
     def link(service)
-      self.links << service.name
+      links << service.name
     end
 
     def to_yaml # rubocop:disable Metrics/AbcSize
