@@ -6,7 +6,7 @@ AllCops:
     - 'tmp/**/*'
     - 'db/schema.rb'
     - 'db/migrate/**/*'
-  TargetRubyVersion: 2.3
+  TargetRubyVersion: 2.2
 
 Style/FrozenStringLiteralComment:
   EnforcedStyle: when_needed
@@ -15,5 +15,12 @@ Style/StringLiterals:
   EnforcedStyle: double_quotes
 
 Metrics/LineLength:
-  Max: 85
+  Max: 119
   IgnoreCopDirectives: true
+
+Metrics/AbcSize:
+  Max: 16.5
+
+Metrics/BlockLength:
+  Exclude:
+    - 'spec/**/*_spec.rb'
