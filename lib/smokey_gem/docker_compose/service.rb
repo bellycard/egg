@@ -36,7 +36,7 @@ class DockerCompose
       output["image"] = image if image
       output["build"] = "." if dockerfile
       output["command"] = command if command
-      output.compact
+      output.each_with_object({}) { |(k, v), hash| hash[k] = v if v }
     end
   end
 end
