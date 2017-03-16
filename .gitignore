@@ -7,5 +7,5 @@
 /spec/reports/
 /tmp/
 
-.ideaDockerfile
-.idea/
+.idea
+/spec/examples.txt

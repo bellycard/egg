@@ -1,22 +1,33 @@
 # frozen_string_literal: true
 require "yaml"
 
-module SmokeyGem
-  # Wraps the generation of Docker Compose file
-  class DockerCompose
-    attr_reader :docker_compose
-    def initialize(compose_config = {})
-      @docker_compose = {
-        "version" => "2"
-      }.merge(compose_config)
+# Wraps the generation of Docker Compose file
+class DockerCompose
+  attr_reader :docker_compose,
+              :services
+
+  def initialize(_compose_config = {})
+    @services = []
+  end
+
+  def configure
+    yield docker_compose
+  end
+
+  def to_yaml
+    output = { "version" => "2" }
+    output["services"] = services.each_with_object({}) do |service, hash|
+      hash[service.name] = service.to_hash
     end
 
-    def configure
-      yield docker_compose
-    end
+    output.to_yaml
+  end
 
-    def to_yaml
-      docker_compose.to_yaml
-    end
+  def service(name)
+    service = Service.new(name)
+    services << service
+    service
   end
 end
+
+require_relative "docker_compose/service"
