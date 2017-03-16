@@ -17,6 +17,9 @@ RUN apt-get -qqy install supervisor
 RUN mkdir -p /var/log/supervisor
 <% end %>
 
+# Update bundler
+RUN gem install bundler
+
 ENV APP_HOME /app
 RUN mkdir $APP_HOME
 WORKDIR $APP_HOME
