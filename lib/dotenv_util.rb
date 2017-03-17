@@ -22,7 +22,9 @@ class DotenvUtil
 
   def parse_env_file
     env_text.split.each_with_object({}) do |line, hash|
-      hash.store(*line.match(/^([A-Z_]+)="?(.+)?"?$/).captures)
+      match = line.match(/^([A-Z_]+)="?(.+)?"?$/)
+      next unless match
+      hash.store(*match.captures)
       hash
     end
   end
