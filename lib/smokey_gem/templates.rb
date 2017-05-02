@@ -4,9 +4,12 @@ require "erb"
 module SmokeyGem
   # Aids in the loading of template files bundled in the gem.
   class Templates
+    class TemplateNotFoundError < StandardError; end
+
     def self.[](filename)
-      templates_path = File.expand_path("../../../templates", __FILE__)
-      ERB.new(File.read(File.join(templates_path, filename)))
+      template_path = SmokeyGem.root_join("..", "templates", filename)
+      raise(TemplateNotFoundError, "No #{filename}") unless File.exist?(template_path)
+      ERB.new(File.read(template_path))
     end
   end
 end

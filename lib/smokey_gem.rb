@@ -2,6 +2,11 @@
 
 # :nodoc:
 module SmokeyGem
+  def self.root_join(*joins)
+    path_parts = [File.dirname(__FILE__)] + joins.map(&:to_s)
+    joined_path = File.join(*path_parts)
+    File.expand_path(joined_path)
+  end
 end
 
 require_relative "smokey_gem/version"

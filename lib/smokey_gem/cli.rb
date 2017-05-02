@@ -14,6 +14,7 @@ module SmokeyGem
         exit(1)
       else
         File.write("smokey_config.rb", config.result)
+        print "Wrote example smokey_config.rb, customize it to suit your app"
         write_git_ignorance
       end
     end
