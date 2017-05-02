@@ -48,23 +48,31 @@ module SmokeyGem
     def run_setup
       write_docker_files
 
-      system("docker-compose pull")
-      system("docker-compose build") || raise($CHILD_STATUS)
-
+      docker_pull_build
       File.write(".env", dotenv.generate_env)
-
       system("docker-compose up -d")
 
-      if @after_startup
-        print "Running after-startup block\n"
-        @after_startup.call
-      end
+      run_after_startup
 
-      app_service = docker_compose.services.find { |s| s.name == "app" }
-      print "App is now running at http://localhost:#{app_service.ports[0].split(':')[0]}\n"
+      print "App is now running at http://localhost:#{get_app_port}\n"
+    end
+
+    def app_port
+      docker_compose.services.find { |s| s.name == "app" }.ports[0].split(":")[0]
     end
 
     private
+
+    def run_after_startup
+      return unless @after_startup
+      print "Running after-startup block\n"
+      @after_startup.call
+    end
+
+    def docker_pull_build
+      system("docker-compose pull")
+      system("docker-compose build") || raise($CHILD_STATUS)
+    end
 
     def write_docker_files
       File.write("Dockerfile", dockerfile.render)
