@@ -33,8 +33,7 @@ class DockerCompose
         "ports" => ports
       }
 
-      output["image"] = image if image
-      output["build"] = "." if dockerfile
+      image ? output["image"] = image : output["build"] = "."
       output["command"] = command if command
       output.each_with_object({}) { |(k, v), hash| hash[k] = v if v }
     end

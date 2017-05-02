@@ -2,6 +2,7 @@
 require "yaml"
 require "fileutils"
 require "dotenv_util"
+require "dockerfile"
 
 module SmokeyGem
   # Reads and Processes the smokey_config.rb file.
@@ -15,15 +16,17 @@ module SmokeyGem
       return config if config.is_a? SmokeyGem::Configuration
     rescue SignalException, SystemExit
       raise
-    rescue SyntaxError, Exception => e # rubocop:disable Lint/RescueException
+    rescue SyntaxError, StandardError => e
       warn "Invalid configuration in [#{file}]: #{e}"
+      warn e.backtrace.join("\n")
     end
 
     attr_accessor :docker_compose,
                   :ssh_support,
                   :ruby_version,
                   :supervisor,
-                  :dotenv
+                  :dotenv,
+                  :dockerfile
 
     def initialize(&configuration_block)
       self.docker_compose = DockerCompose.new
@@ -45,26 +48,34 @@ module SmokeyGem
     def run_setup
       write_docker_files
 
-      system("docker-compose pull")
-      system("docker-compose build") || raise($CHILD_STATUS)
-
+      docker_pull_build
       File.write(".env", dotenv.generate_env)
-
       system("docker-compose up -d")
 
-      if @after_startup
-        print "Running after-startup block\n"
-        @after_startup.call
-      end
+      run_after_startup
 
-      print "App is now running at http://localhost:3000\n"
+      print "App is now running at http://localhost:#{get_app_port}\n"
+    end
+
+    def app_port
+      docker_compose.services.find { |s| s.name == "app" }.ports[0].split(":")[0]
     end
 
     private
 
+    def run_after_startup
+      return unless @after_startup
+      print "Running after-startup block\n"
+      @after_startup.call
+    end
+
+    def docker_pull_build
+      system("docker-compose pull")
+      system("docker-compose build") || raise($CHILD_STATUS)
+    end
+
     def write_docker_files
-      dockerfile = Templates["Dockerfile"]
-      File.write("Dockerfile", dockerfile.result(binding))
+      File.write("Dockerfile", dockerfile.render)
 
       dockerignore = Templates[".dockerignore"].result(binding)
       File.write(".dockerignore", dockerignore)

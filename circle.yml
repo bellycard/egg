@@ -14,4 +14,4 @@ test:
         parallel: true
         files:
           - spec/**/*_spec.rb
-    - bundle exec pronto run -c origin/master -f github github_status --exit-code
+    - bundle exec pronto run -c origin/master -f github github_status
