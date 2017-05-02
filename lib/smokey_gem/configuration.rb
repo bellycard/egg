@@ -2,6 +2,7 @@
 require "yaml"
 require "fileutils"
 require "dotenv_util"
+require "dockerfile"
 
 module SmokeyGem
   # Reads and Processes the smokey_config.rb file.
@@ -15,7 +16,7 @@ module SmokeyGem
       return config if config.is_a? SmokeyGem::Configuration
     rescue SignalException, SystemExit
       raise
-    rescue SyntaxError, Exception => e # rubocop:disable Lint/RescueException
+    rescue SyntaxError, StandardError => e
       warn "Invalid configuration in [#{file}]: #{e}"
     end
 
@@ -23,7 +24,8 @@ module SmokeyGem
                   :ssh_support,
                   :ruby_version,
                   :supervisor,
-                  :dotenv
+                  :dotenv,
+                  :dockerfile
 
     def initialize(&configuration_block)
       self.docker_compose = DockerCompose.new
@@ -57,14 +59,14 @@ module SmokeyGem
         @after_startup.call
       end
 
-      print "App is now running at http://localhost:3000\n"
+      app_service = docker_compose.services.find{|s| s.name == "app" }
+      print "App is now running at http://localhost:#{app_service.ports[0].split(":")[0]}\n"
     end
 
     private
 
     def write_docker_files
-      dockerfile = Templates["Dockerfile"]
-      File.write("Dockerfile", dockerfile.result(binding))
+      File.write("Dockerfile", self.dockerfile.render)
 
       dockerignore = Templates[".dockerignore"].result(binding)
       File.write(".dockerignore", dockerignore)
