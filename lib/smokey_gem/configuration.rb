@@ -18,6 +18,7 @@ module SmokeyGem
       raise
     rescue SyntaxError, StandardError => e
       warn "Invalid configuration in [#{file}]: #{e}"
+      warn e.backtrace.join("\n")
     end
 
     attr_accessor :docker_compose,

@@ -15,5 +15,12 @@ SmokeyGem::Configuration.new do |config|
 
   # db = config.docker_compose.service "db"
   # db.image = "mysql"
+  # db.env "MYSQL_ROOT_PASSWORD", "mysqliswebscale"
   # app.link db
+
+  # after_startup do
+  #   docker_exec "app", "rake db:setup db:seed"
+  #   dotenv.set("foo", "bar")
+  #   File.write(".env", dotenv.generate_env)
+  # end
 end
