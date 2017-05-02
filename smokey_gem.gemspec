@@ -10,8 +10,8 @@ EOT
 Gem::Specification.new do |spec|
   spec.name          = "smokey_gem"
   spec.version       = SmokeyGem::VERSION
-  spec.authors       = ["Carl Thuringer"]
-  spec.email         = ["carl@bellycard.com"]
+  spec.authors       = ["Carl Thuringer", "Jason Sisk"]
+  spec.email         = ["tech@bellycard.com"]
 
   spec.summary       = "Smokey helps you develop with Docker"
   spec.description   = description
