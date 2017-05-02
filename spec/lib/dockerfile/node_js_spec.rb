@@ -15,14 +15,14 @@ RSpec.describe Dockerfile::NodeJS do
   it "Requires setting the nodeJS_version" do
     df = Dockerfile.use "NodeJS"
     df.command = ["bin/rails", "server", "-p 3000"]
-    expect{ df.render }.to raise_error(Dockerfile::MissingPropertyError)
-                             .with_message(/node_version/)
+    expect { df.render }.to raise_error(Dockerfile::MissingPropertyError)
+      .with_message(/node_version/)
   end
 
   it "Requires setting the command" do
     df = Dockerfile.use "NodeJS"
     df.node_version = "2.4.0"
-    expect{ df.render }.to raise_error(Dockerfile::MissingPropertyError)
-                             .with_message(/command/)
+    expect { df.render }.to raise_error(Dockerfile::MissingPropertyError)
+      .with_message(/command/)
   end
 end

@@ -15,14 +15,14 @@ RSpec.describe Dockerfile::Ruby do
   it "Requires setting the ruby_version" do
     df = Dockerfile.use "Ruby"
     df.command = ["bin/rails", "server", "-p 3000"]
-    expect{ df.render }.to raise_error(Dockerfile::MissingPropertyError)
-                             .with_message(/ruby_version/)
+    expect { df.render }.to raise_error(Dockerfile::MissingPropertyError)
+      .with_message(/ruby_version/)
   end
 
   it "Requires setting the command" do
     df = Dockerfile.use "Ruby"
     df.ruby_version = "2.4.0"
-    expect{ df.render }.to raise_error(Dockerfile::MissingPropertyError)
-                             .with_message(/command/)
+    expect { df.render }.to raise_error(Dockerfile::MissingPropertyError)
+      .with_message(/command/)
   end
 end

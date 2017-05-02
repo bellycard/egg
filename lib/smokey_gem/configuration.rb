@@ -60,14 +60,14 @@ module SmokeyGem
         @after_startup.call
       end
 
-      app_service = docker_compose.services.find{|s| s.name == "app" }
-      print "App is now running at http://localhost:#{app_service.ports[0].split(":")[0]}\n"
+      app_service = docker_compose.services.find { |s| s.name == "app" }
+      print "App is now running at http://localhost:#{app_service.ports[0].split(':')[0]}\n"
     end
 
     private
 
     def write_docker_files
-      File.write("Dockerfile", self.dockerfile.render)
+      File.write("Dockerfile", dockerfile.render)
 
       dockerignore = Templates[".dockerignore"].result(binding)
       File.write(".dockerignore", dockerignore)
