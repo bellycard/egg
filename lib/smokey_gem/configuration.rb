@@ -1,8 +1,10 @@
 # frozen_string_literal: true
+
 require "yaml"
 require "fileutils"
 require "dotenv_util"
 require "dockerfile"
+require "open3"
 
 module SmokeyGem
   # Reads and Processes the smokey_config.rb file.
@@ -41,8 +43,12 @@ module SmokeyGem
       @after_startup = block
     end
 
+    # You may pass a block to docker_exec to read the output in a controlled manner.
     def docker_exec(app, command)
-      system("docker-compose exec #{app} #{command}") || raise($CHILD_STATUS)
+      Open3.popen2(%(docker-compose exec #{app} #{command})) do |_input, output, wait_thread|
+        yield output if block_given?
+        wait_thread.value.success? || raise(wait_thread.value)
+      end
     end
 
     def run_setup
@@ -54,7 +60,7 @@ module SmokeyGem
 
       run_after_startup
 
-      print "App is now running at http://localhost:#{get_app_port}\n"
+      print "App is now running at http://localhost:#{app_port}\n"
     end
 
     def app_port
