@@ -45,9 +45,12 @@ module SmokeyGem
 
     # You may pass a block to docker_exec to read the output in a controlled manner.
     def docker_exec(app, command)
+      print "docker-compose exec #{app} #{command}\n"
       Open3.popen2(%(docker-compose exec #{app} #{command})) do |_input, output, wait_thread|
-        yield output if block_given?
-        wait_thread.value.success? || raise(wait_thread.value)
+        output_read = output.read
+        print output_read + "\n"
+        yield output_read if block_given?
+        wait_thread.value.success? || raise(StandardError, "docker_exec exited with #{wait_thread.value.to_i}")
       end
     end
 
