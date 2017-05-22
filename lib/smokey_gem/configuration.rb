@@ -63,7 +63,7 @@ module SmokeyGem
 
       run_after_startup
 
-      print "App is now running at http://localhost:#{app_port}\n"
+      print "App is now running at http://localhost:#{app_port}\n" if dockerfile
     end
 
     def app_port
