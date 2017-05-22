@@ -1,4 +1,4 @@
 # frozen_string_literal: true
 module SmokeyGem
-  VERSION = "0.2.1" # rubocop:disable Style/MutableConstant
+  VERSION = "0.2.2" # rubocop:disable Style/MutableConstant
 end
