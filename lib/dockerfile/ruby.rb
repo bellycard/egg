@@ -8,11 +8,28 @@ module Dockerfile
     end
 
     attr_accessor :ruby_version
+
     def initialize
-      file_dirname = File.dirname(__FILE__)
-      file_join = File.join(file_dirname, "ruby", "Dockerfile")
-      file_read = File.read(file_join)
-      @template = ERB.new(file_read)
+      @template = dockerfile
+    end
+
+    private
+
+    def dockerfile # rubocop:disable Metrics/MethodLength
+      [
+        [:from, "ruby:<%= ruby_version %>"],
+        [:run, "apt-get update -qq && apt-get upgrade -qqy"],
+        [:run, "apt-get -qqy install cmake"],
+        [:run, "gem install bundler"],
+        [:env, "APP_HOME /app"],
+        [:run, "mkdir $APP_HOME"],
+        [:workdir, "$APP_HOME"],
+        [:add, ".ruby-version $APP_HOME/"],
+        [:add, "Gemfile* $APP_HOME/"],
+        [:env, "BUNDLE_GEMFILE=$APP_HOME/Gemfile BUNDLE_JOBS=4 BUNDLE_WITHOUT=production:staging"],
+        [:run, "bundle install"],
+        [:add, ". $APP_HOME"]
+      ]
     end
   end
 end
