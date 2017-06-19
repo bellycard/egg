@@ -10,5 +10,7 @@ ADD yarn.lock $APP_HOME/
 RUN yarn install
 
 ADD . $APP_HOME
-
+<% run.each do |r| %>
+RUN <%= r %>
+<% end %>
 CMD <%= command %>

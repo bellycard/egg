@@ -21,5 +21,7 @@ ENV BUNDLE_GEMFILE=$APP_HOME/Gemfile \
 RUN bundle install
 
 ADD . $APP_HOME
-
+<% run.each do |r| %>
+RUN <%= r %>
+<% end %>
 CMD <%= command %>

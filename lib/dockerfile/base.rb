@@ -19,5 +19,11 @@ module Dockerfile
 
       template.result(binding)
     end
+
+    def run(command = nil)
+      @_run ||= []
+      @_run << command if command
+      @_run
+    end
   end
 end
