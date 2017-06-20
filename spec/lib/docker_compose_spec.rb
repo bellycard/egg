@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 require "smokey_gem/docker_compose"
 
 RSpec.describe DockerCompose do

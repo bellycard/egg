@@ -6,11 +6,25 @@ module Dockerfile
     end
 
     attr_accessor :node_version
+
     def initialize
-      file_dirname = File.dirname(__FILE__)
-      file_join = File.join(file_dirname, "node_js", "Dockerfile")
-      file_read = File.read(file_join)
-      @template = ERB.new(file_read)
+      @template = dockerfile
+    end
+
+    private
+
+    def dockerfile # rubocop:disable Metrics/MethodLength
+      [
+        [:from, "node:<%= node_version %>"],
+        [:env, "APP_HOME /app"],
+        [:run, "mkdir $APP_HOME"],
+        [:workdir, "$APP_HOME"],
+        [:add, "package.json $APP_HOME/"],
+        [:add, "yarn.lock $APP_HOME/"],
+        [:run, "yarn install"],
+        [:add, ". $APP_HOME"],
+        [:cmd, "<%= command %>"]
+      ]
     end
   end
 end

@@ -5,7 +5,7 @@ module Dockerfile
     attr_accessor :command
 
     def initialize
-      raise "Must define a subclass initializer that populates @template"
+      @template = []
     end
 
     def required_attributes
@@ -17,7 +17,23 @@ module Dockerfile
         raise(MissingPropertyError, "Must populate #{attr}") if send(attr).nil?
       end
 
-      template.result(binding)
+      unrendered_output = template.reduce("") do |out, (command, string)|
+        out << command.to_s.upcase << " " << string << "\n"
+      end
+
+      ERB.new(unrendered_output).result(binding)
+    end
+
+    def run(command, before: [:cmd])
+      template.insert(do_before(before), [:run, command])
+    end
+
+    private
+
+    def do_before(before)
+      template.index(before) ||
+        template.index { |tc| tc[0] == before[0] } ||
+        -1
     end
   end
 end
