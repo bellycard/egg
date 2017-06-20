@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 require "yaml"
 
 # Wraps the generation of Docker Compose file

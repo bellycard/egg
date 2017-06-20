@@ -12,4 +12,22 @@ RSpec.describe Dockerfile do
       Dockerfile.use("FooLang")
     end.to raise_error(Dockerfile::NoDockerfileError)
   end
+
+  describe "#run" do
+    it "Appends another RUN action" do
+      df = Dockerfile.use("Ruby")
+      df.command = "test"
+      df.ruby_version = "2.3.3"
+      df.run "echo awesomesauce"
+      expect(df.render).to match(/^RUN echo awesomesauce$/)
+    end
+
+    it "Allows you to run some commands before a specific command" do
+      df = Dockerfile.use("Ruby")
+      df.command = "test"
+      df.ruby_version = "2.3.3"
+      df.run "echo before bundling", before: [:run, "bundle install"]
+      expect(df.render).to match(/^RUN echo before bundling\nRUN bundle install$/)
+    end
+  end
 end

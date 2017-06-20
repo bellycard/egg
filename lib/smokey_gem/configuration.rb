@@ -62,12 +62,6 @@ module SmokeyGem
       system("docker-compose up -d")
 
       run_after_startup
-
-      print "App is now running at http://localhost:#{app_port}\n" if dockerfile
-    end
-
-    def app_port
-      docker_compose.services.find { |s| s.name == "app" }.ports[0].split(":")[0]
     end
 
     private
