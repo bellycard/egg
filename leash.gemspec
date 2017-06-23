@@ -14,7 +14,7 @@ Gem::Specification.new do |spec|
   spec.authors       = ["Carl Thuringer", "Jason Sisk"]
   spec.email         = ["tech@bellycard.com"]
 
-  spec.summary       = "Leash helps you develop with Docker"
+  spec.summary       = "Leash helps you develop with Docker!"
   spec.description   = description
   spec.homepage      = "http://github.com/bellycard/leash"
   spec.license       = "Apache-2.0"
