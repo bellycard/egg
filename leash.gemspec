@@ -2,21 +2,21 @@
 
 lib = File.expand_path("../lib", __FILE__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
-require "smokey_gem/version"
+require "leash/version"
 
 description = <<-EOT
-Smokey helps initialize, manage, and execute on complex multi-service architectures using Docker and Docker Compose
+Leash helps initialize, manage, and execute on complex multi-service architectures using Docker and Docker Compose
 EOT
 
 Gem::Specification.new do |spec|
-  spec.name          = "smokey_gem"
-  spec.version       = SmokeyGem::VERSION
+  spec.name          = "leash"
+  spec.version       = Leash::VERSION
   spec.authors       = ["Carl Thuringer", "Jason Sisk"]
   spec.email         = ["tech@bellycard.com"]
 
-  spec.summary       = "Smokey helps you develop with Docker"
+  spec.summary       = "Leash helps you develop with Docker"
   spec.description   = description
-  spec.homepage      = "http://github.com/bellycard/smokey_gem"
+  spec.homepage      = "http://github.com/bellycard/leash"
   spec.license       = "Apache-2.0"
   spec.metadata["allowed_push_host"] = "http://rubygems.org"
 

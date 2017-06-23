@@ -1,5 +1,5 @@
 # frozen_string_literal: true
 
-module SmokeyGem
+module Leash
   VERSION = "0.3.0".freeze
 end

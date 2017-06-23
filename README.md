@@ -1,6 +1,6 @@
-# SmokeyGem
+# Leash
 
-Smokey helps prevent code fires! Also he makes it easy to run complex multi-service apps with Docker.
+Leash helps prevent code fires! Also he makes it easy to run complex multi-service apps with Docker.
 
 Maintainers:
 * [Carl Thuringer](https://github.com/carlthuringer)
@@ -15,7 +15,7 @@ framework agnostic, though the configuration language will be Ruby.
 Add this line to your application's Gemfile:
 
 ```ruby
-gem 'smokey_gem'
+gem 'leash'
 ```
 
 And then execute:
@@ -24,22 +24,10 @@ And then execute:
 
 Or install it yourself as:
 
-    $ gem install smokey_gem
+    $ gem install leash
 
 ## Usage
-
-You must have docker and the AWS CLI installed and configured. You will need to know your AWS account access token ID 
-and Secret.
-
-[**Get Docker**](https://www.docker.com/products/overview)
-
-
-```bash
-brew install awscli
-aws configure --profile smokey
-```
-
-* `init` - Initialize a repo for use with Smokey. Creates the `smokey_config.rb`
+* `init` - Initialize a repo for use with Leash. Creates the `leash_config.rb`
 * `readme` - Display the Usage readme
 * `setup` - Generates the docker files from the configuration, runs all setup hooks, then boots the application.
 
@@ -51,7 +39,7 @@ To install this gem onto your local machine, run `bundle exec rake install`. To 
 
 ## Contributing
 
-Bug reports and pull requests are welcome on GitHub at https://github.com/bellycard/smokey_gem. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [Contributor Covenant](http://contributor-covenant.org) code of conduct.
+Bug reports and pull requests are welcome on GitHub at https://github.com/bellycard/leash. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [Contributor Covenant](http://contributor-covenant.org) code of conduct.
 
 
 ## License

@@ -1,13 +1,13 @@
-# SMOKEY
+# Leash
 
-Smokey makes it easy to set up a cluster of applications for local development, using the magic of docker.
+Leash makes it easy to set up a cluster of applications for local development, using the magic of docker.
 
 ## Usage
 
 ```bash
-smokey setup
+leash setup
 ```
-Once finished, the app will be running at http://localhost:4001.
+Once finished, the services will be running.
 
 ### Stopping, Starting, Updating
 
