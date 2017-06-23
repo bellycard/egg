@@ -5,6 +5,10 @@ jobs:
     docker:
       - image: ruby:2.4.0
     steps:
+      - run:
+        name: build-deps
+        command: |
+          apt-get install -qqy cmake
       - checkout
       - type: cache-restore
         key: leash-bundler-{{ checksum "Gemfile.lock" }}
