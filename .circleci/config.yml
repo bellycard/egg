@@ -11,6 +11,8 @@ jobs:
       - run: bundle install --path vendor/bundle
       - type: cache-save
         key: leash-bundler-{{ checksum "Gemfile.lock" }}
+        paths:
+          - vendor/bundle
       - run:
           name: rspec
           command: |
