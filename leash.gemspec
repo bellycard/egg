@@ -5,7 +5,7 @@ $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 require "leash/version"
 
 description = <<-EOT
-Leash helps initialize, manage, and execute on complex multi-service architectures using Docker and Docker Compose
+  Leash helps initialize, manage, and execute on complex multi-service architectures using Docker and Docker Compose
 EOT
 
 Gem::Specification.new do |spec|
