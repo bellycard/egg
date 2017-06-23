@@ -8,6 +8,7 @@ jobs:
       - run:
         name: build-deps
         command: |
+          apt-get -qq update
           apt-get install -qqy cmake
       - checkout
       - type: cache-restore
