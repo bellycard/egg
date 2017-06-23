@@ -1,17 +1,23 @@
-machine:
-  # Version of ruby to use
-  ruby:
-    version:
-      ruby-2.4.0
-
-checkout:
-  post:
-    - git fetch origin --depth=1000000
-
-test:
-  override:
-    - bundle exec rspec -r rspec_junit_formatter --format RspecJunitFormatter -o $CIRCLE_TEST_REPORTS/rspec-junit.xml --format documentation $stdout:
-        parallel: true
-        files:
-          - spec/**/*_spec.rb
-    - bundle exec pronto run -c origin/master -f github github_status
+version: 2
+jobs:
+  build:
+    working_directory: ~/leash
+    docker:
+      - image: ruby:2.4.0
+    steps:
+      - checkout
+      - type: cache-restore
+        key: leash-bundler-{{ checksum "Gemfile.lock" }}
+      - run: bundle install --path vendor/bundle
+      - type: cache-save
+        key: leash-bundler-{{ checksum "Gemfile.lock" }}
+      - name: rspec
+        command: |
+          mkdir -p /tmp/test-results
+          bundle exec rspec --profile 10 \
+                            --format RspecJunitFormatter \
+                            --out /tmp/test-results/rspec.xml \
+                            --format progress \
+                            $(circleci tests glob "spec/**/*_spec.rb" | circleci tests)
+      - type: store_test_results
+        path: /tmp/test-results
