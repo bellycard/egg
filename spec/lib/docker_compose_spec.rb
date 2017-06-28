@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require "smokey_gem/docker_compose"
+require "leash/docker_compose"
 
 RSpec.describe DockerCompose do
   it "generates a valid, empty docker_compose file" do
