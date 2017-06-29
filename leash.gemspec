@@ -18,7 +18,7 @@ Gem::Specification.new do |spec|
   spec.description   = description
   spec.homepage      = "http://github.com/bellycard/leash"
   spec.license       = "Apache-2.0"
-  spec.metadata["allowed_push_host"] = "http://rubygems.org"
+  spec.metadata["allowed_push_host"] = "https://rubygems.org"
 
   spec.files = `git ls-files -z`.split("\x0").reject do |f|
     f.match(%r{^(test|spec|features)/})
@@ -31,7 +31,7 @@ Gem::Specification.new do |spec|
 
   spec.add_development_dependency "bundler", "~> 1.15"
   spec.add_development_dependency "rake", "~> 12.0"
-  spec.add_development_dependency "rspec", "~> 3.6.0"
+  spec.add_development_dependency "rspec", '~> 3.6', '>= 3.6.0'
   spec.add_development_dependency "rspec_junit_formatter", "~> 0.2.3"
   spec.add_development_dependency "pronto", "~> 0.9.3"
   spec.add_development_dependency "pronto-rubocop", "~> 0.9.0"
