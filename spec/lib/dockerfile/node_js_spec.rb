@@ -7,7 +7,7 @@ RSpec.describe Dockerfile::NodeJS do
 
   it "Can render from a template" do
     df = Dockerfile.use "NodeJS"
-    df.command = %w(npm start)
+    df.command = %w[npm start]
     df.node_version = "7.9.0"
     expect(df.render).to match(/FROM node/)
   end

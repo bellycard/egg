@@ -3,24 +3,24 @@
 require "thor"
 require "fileutils"
 
-module SmokeyGem
-  # Defines the CLI interface to smokey functions
+module Leash
+  # Defines the CLI interface to leash functions
   class CLI < Thor
-    desc "init", "Initialize the current directory as a Smokey repo."
+    desc "init", "Initialize the current directory as a Leash repo."
     option :force
     def init
-      config = Templates["smokey_config.rb"]
-      if File.exist?("smokey_config.rb") && !options[:force]
-        print "Smokey has already been initialized! (maybe you want to --force)\n"
+      config = Templates["leash_config.rb"]
+      if File.exist?("leash_config.rb") && !options[:force]
+        print "Leash has already been initialized! (maybe you want to --force)\n"
         exit(1)
       else
-        File.write("smokey_config.rb", config.result)
-        print "Wrote example smokey_config.rb, customize it to suit your app"
+        File.write("leash_config.rb", config.result)
+        print "Wrote example leash_config.rb, customize it to suit your app"
         write_git_ignorance
       end
     end
 
-    desc "readme", "Display readme for Smokey apps."
+    desc "readme", "Display readme for Leash apps."
     def readme
       # Print out the readme
       readme_path = File.expand_path("../../../doc/README.md", __FILE__)
@@ -31,7 +31,7 @@ module SmokeyGem
 
     desc "setup", "Run all setup"
     def setup
-      config = Configuration.load "./smokey_config.rb"
+      config = Configuration.load "./leash_config.rb"
       config.run_setup
     end
 

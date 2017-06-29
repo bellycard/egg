@@ -1,13 +1,13 @@
 # frozen_string_literal: true
 
 require "spec_helper"
-require "smokey_gem"
+require "leash"
 require "dotenv_util"
 
-RSpec.describe SmokeyGem::Configuration do
+RSpec.describe Leash::Configuration do
   describe "#database_url" do
     it "Sets up the database url as a postgres database" do
-      database_url = "postgres://smokey:postgreswins@db/smokey_database"
+      database_url = "postgres://leash:postgreswins@db/leash_database"
 
       tmp_env_text = <<-EOF
         DATABASE_URL=
