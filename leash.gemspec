@@ -9,7 +9,7 @@ description = <<-EOT
 EOT
 
 Gem::Specification.new do |spec|
-  spec.name          = "Egg"
+  spec.name          = "egg"
   spec.version       = Egg::VERSION
   spec.authors       = ["Carl Thuringer", "Jason Sisk"]
   spec.email         = ["tech@bellycard.com"]
