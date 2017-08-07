@@ -64,19 +64,6 @@ module Egg
       run_after_startup
     end
 
-    private
-
-    def run_after_startup
-      return unless @after_startup
-      print "Running after-startup block\n"
-      @after_startup.call
-    end
-
-    def docker_pull_build
-      system("docker-compose pull")
-      system("docker-compose build") || raise($CHILD_STATUS)
-    end
-
     def write_docker_files
       File.write("Dockerfile", dockerfile.render) if dockerfile
 
@@ -84,6 +71,19 @@ module Egg
       File.write(".dockerignore", dockerignore)
 
       File.write("docker-compose.yml", docker_compose.to_yaml)
+    end
+
+    def docker_pull_build
+      system("docker-compose pull")
+      system("docker-compose build") || raise($CHILD_STATUS)
+    end
+
+    private
+
+    def run_after_startup
+      return unless @after_startup
+      print "Running after-startup block\n"
+      @after_startup.call
     end
   end
 end
