@@ -2,5 +2,5 @@
 
 source "https://rubygems.org"
 
-# Specify your gem's dependencies in leash.gemspec
+# Specify your gem's dependencies in egg.gemspec
 gemspec

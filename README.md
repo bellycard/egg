@@ -1,6 +1,6 @@
-# Leash
+# Egg
 
-Leash helps prevent code fires! Also he makes it easy to run complex multi-service apps with Docker.
+Egg helps prevent code fires! Also he makes it easy to run complex multi-service apps with Docker.
 
 Maintainers:
 * [Carl Thuringer](https://github.com/carlthuringer)
@@ -15,7 +15,7 @@ framework agnostic, though the configuration language will be Ruby.
 Add this line to your application's Gemfile:
 
 ```ruby
-gem 'leash'
+gem 'egg'
 ```
 
 And then execute:
@@ -24,10 +24,10 @@ And then execute:
 
 Or install it yourself as:
 
-    $ gem install leash
+    $ gem install egg
 
 ## Usage
-* `init` - Initialize a repo for use with Leash. Creates the `leash_config.rb`
+* `init` - Initialize a repo for use with Egg. Creates the `egg_config.rb`
 * `readme` - Display the Usage readme
 * `setup` - Generates the docker files from the configuration, runs all setup hooks, then boots the application.
 
@@ -39,7 +39,7 @@ To install this gem onto your local machine, run `bundle exec rake install`. To 
 
 ## Contributing
 
-Bug reports and pull requests are welcome on GitHub at https://github.com/bellycard/leash. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [Contributor Covenant](http://contributor-covenant.org) code of conduct.
+Bug reports and pull requests are welcome on GitHub at https://github.com/bellycard/egg. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [Contributor Covenant](http://contributor-covenant.org) code of conduct.
 
 
 ## License

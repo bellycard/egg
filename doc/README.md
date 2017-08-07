@@ -1,11 +1,11 @@
-# Leash
+# Egg
 
-Leash makes it easy to set up a cluster of applications for local development, using the magic of docker.
+Egg makes it easy to set up a cluster of applications for local development, using the magic of docker.
 
 ## Usage
 
 ```bash
-leash setup
+egg setup
 ```
 Once finished, the services will be running.
 

@@ -3,24 +3,24 @@
 require "thor"
 require "fileutils"
 
-module Leash
-  # Defines the CLI interface to leash functions
+module Egg
+  # Defines the CLI interface to egg functions
   class CLI < Thor
-    desc "init", "Initialize the current directory as a Leash repo."
+    desc "init", "Initialize the current directory as a egg repo."
     option :force
     def init
-      config = Templates["leash_config.rb"]
-      if File.exist?("leash_config.rb") && !options[:force]
-        print "Leash has already been initialized! (maybe you want to --force)\n"
+      config = Templates["egg_config.rb"]
+      if File.exist?("egg_config.rb") && !options[:force]
+        print "egg has already been initialized! (maybe you want to --force)\n"
         exit(1)
       else
-        File.write("leash_config.rb", config.result)
-        print "Wrote example leash_config.rb, customize it to suit your app"
+        File.write("egg_config.rb", config.result)
+        print "Wrote example egg_config.rb, customize it to suit your app"
         write_git_ignorance
       end
     end
 
-    desc "readme", "Display readme for Leash apps."
+    desc "readme", "Display readme for egg apps."
     def readme
       # Print out the readme
       readme_path = File.expand_path("../../../doc/README.md", __FILE__)
@@ -31,7 +31,7 @@ module Leash
 
     desc "setup", "Run all setup"
     def setup
-      config = Configuration.load "./leash_config.rb"
+      config = Configuration.load "./egg_config.rb"
       config.run_setup
     end
 

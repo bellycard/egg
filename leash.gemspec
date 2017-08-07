@@ -2,21 +2,21 @@
 
 lib = File.expand_path("../lib", __FILE__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
-require "leash/version"
+require "Egg/version"
 
 description = <<-EOT
-  Leash helps initialize, manage, and execute on complex multi-service architectures using Docker and Docker Compose
+  Egg helps initialize, manage, and execute on complex multi-service architectures using Docker and Docker Compose
 EOT
 
 Gem::Specification.new do |spec|
-  spec.name          = "leash"
-  spec.version       = Leash::VERSION
+  spec.name          = "Egg"
+  spec.version       = Egg::VERSION
   spec.authors       = ["Carl Thuringer", "Jason Sisk"]
   spec.email         = ["tech@bellycard.com"]
 
-  spec.summary       = "Leash helps you develop with Docker!"
+  spec.summary       = "Egg helps you develop with Docker!"
   spec.description   = description
-  spec.homepage      = "http://github.com/bellycard/leash"
+  spec.homepage      = "http://github.com/bellycard/egg"
   spec.license       = "Apache-2.0"
   spec.metadata["allowed_push_host"] = "https://rubygems.org"
 

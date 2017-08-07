@@ -6,8 +6,8 @@ require "dotenv_util"
 require "dockerfile"
 require "open3"
 
-module Leash
-  # Reads and Processes the leash_config.rb file.
+module Egg
+  # Reads and Processes the egg_config.rb file.
   class Configuration
     # Based on rubygems' specification load:
     # https://github.com/rubygems/rubygems/blob/0749715e4bd9e7f0fb631a352ddc649574da91c1/lib/rubygems/specification.rb#L1146
@@ -15,7 +15,7 @@ module Leash
       code = File.read file
       config = eval code, binding, file # rubocop:disable Security/Eval
 
-      return config if config.is_a? Leash::Configuration
+      return config if config.is_a? Egg::Configuration
     rescue SignalException, SystemExit
       raise
     rescue SyntaxError, StandardError => e

@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-Leash::Configuration.new do |config|
+Egg::Configuration.new do |config|
   # Do stuff here.
 
   # Example dockerfile config.

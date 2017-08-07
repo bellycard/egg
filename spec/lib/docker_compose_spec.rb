@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require "leash/docker_compose"
+require "egg/docker_compose"
 
 RSpec.describe DockerCompose do
   it "generates a valid, empty docker_compose file" do

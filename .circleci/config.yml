@@ -1,7 +1,7 @@
 version: 2
 jobs:
   build:
-    working_directory: ~/leash
+    working_directory: ~/egg
     docker:
       - image: ruby:2.4.0
     steps:
@@ -12,10 +12,10 @@ jobs:
             apt-get install -qqy cmake
       - checkout
       - type: cache-restore
-        key: leash-bundler-{{ checksum "Gemfile.lock" }}
+        key: egg-bundler-{{ checksum "Gemfile.lock" }}
       - run: bundle install --path vendor/bundle
       - type: cache-save
-        key: leash-bundler-{{ checksum "Gemfile.lock" }}
+        key: egg-bundler-{{ checksum "Gemfile.lock" }}
         paths:
           - vendor/bundle
       - run:

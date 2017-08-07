@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 # :nodoc:
-module Leash
+module Egg
   def self.root_join(*joins)
     path_parts = [File.dirname(__FILE__)] + joins.map(&:to_s)
     joined_path = File.join(*path_parts)
@@ -9,8 +9,8 @@ module Leash
   end
 end
 
-require_relative "leash/version"
-require_relative "leash/cli"
-require_relative "leash/templates"
-require_relative "leash/configuration"
-require_relative "leash/docker_compose"
+require_relative "egg/version"
+require_relative "egg/cli"
+require_relative "egg/templates"
+require_relative "egg/configuration"
+require_relative "egg/docker_compose"

@@ -1,13 +1,13 @@
 # frozen_string_literal: true
 
 require "spec_helper"
-require "leash"
+require "egg"
 require "dotenv_util"
 
-RSpec.describe Leash::Configuration do
+RSpec.describe Egg::Configuration do
   describe "#database_url" do
     it "Sets up the database url as a postgres database" do
-      database_url = "postgres://leash:postgreswins@db/leash_database"
+      database_url = "postgres://egg:postgreswins@db/egg_database"
 
       tmp_env_text = <<-EOF
         DATABASE_URL=
