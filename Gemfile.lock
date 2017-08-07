@@ -83,7 +83,7 @@ DEPENDENCIES
   pronto (~> 0.9.3)
   pronto-rubocop (~> 0.9.0)
   rake (~> 12.0)
-  rspec (~> 3.6.0)
+  rspec (~> 3.6, >= 3.6.0)
   rspec_junit_formatter (~> 0.2.3)
 
 BUNDLED WITH
