@@ -1,4 +1,7 @@
 
+<h1 align="center">
+    <img src="egg.png" width="600" />
+</h1>
 
 [![CircleCI](https://img.shields.io/circleci/project/github/bellycard/egg.svg)]() [![Gem](https://img.shields.io/gem/v/egg.svg)]()
 
