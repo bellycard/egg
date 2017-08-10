@@ -1,6 +1,8 @@
 
 <h1 align="center">
-    <img src="egg.png" width="600" />
+    <img src="egg.png" width="300" alt="Egg">
+    <br>
+    <br>
 </h1>
 
 ![CircleCI](https://circleci.com/gh/bellycard/egg.png?style=shield&circle-token=10677521a50bce69aca6ec419794d1c44d3cd12a) [![Gem Version](https://badge.fury.io/rb/egg.svg)](https://badge.fury.io/rb/egg)
