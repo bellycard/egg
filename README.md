@@ -3,7 +3,7 @@
     <img src="egg.png" width="600" />
 </h1>
 
-[![CircleCI](https://img.shields.io/circleci/project/github/bellycard/egg.svg)]() [![Gem](https://img.shields.io/gem/v/egg.svg)]()
+[![CircleCI](https://circleci.com/gh/bellycard/egg.png?style=shield&circle-token=10677521a50bce69aca6ec419794d1c44d3cd12a)] [![Gem Version](https://badge.fury.io/rb/egg.svg)](https://badge.fury.io/rb/egg)
 
 > Egg helps prevent code fires! Also he makes it easy to run complex multi-service apps with Docker.
 
