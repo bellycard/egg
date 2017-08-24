@@ -3,7 +3,6 @@
 require "yaml"
 require "fileutils"
 require "dotenv_util"
-require "dockerfile"
 require "open3"
 
 module Egg

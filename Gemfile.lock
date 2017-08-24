@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    egg (0.3.3)
+    egg (0.3.4)
       thor (~> 0.19.4)
 
 GEM
