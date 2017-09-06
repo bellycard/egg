@@ -13,6 +13,7 @@ jobs:
       - checkout
       - type: cache-restore
         key: egg-bundler-{{ checksum "Gemfile.lock" }}
+      - run: gem install bundler
       - run: bundle install --path vendor/bundle
       - type: cache-save
         key: egg-bundler-{{ checksum "Gemfile.lock" }}
