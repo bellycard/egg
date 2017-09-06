@@ -2,7 +2,8 @@
 
 lib = File.expand_path("../lib", __FILE__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
-require "Egg/version"
+
+require "egg/version"
 
 description = <<-EOT
   Egg helps initialize, manage, and execute on complex multi-service architectures using Docker and Docker Compose

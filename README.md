@@ -1,6 +1,13 @@
-# Egg
 
-Egg helps prevent code fires! Also he makes it easy to run complex multi-service apps with Docker.
+<h1 align="center">
+    <img src="egg.png" width="300" alt="Egg">
+    <br>
+    <br>
+</h1>
+
+![CircleCI](https://circleci.com/gh/bellycard/egg.png?style=shield&circle-token=10677521a50bce69aca6ec419794d1c44d3cd12a) [![Gem Version](https://badge.fury.io/rb/egg.svg)](https://badge.fury.io/rb/egg)
+
+> Egg helps prevent code fires! Also he makes it easy to run complex multi-service apps with Docker.
 
 Maintainers:
 * [Carl Thuringer](https://github.com/carlthuringer)
