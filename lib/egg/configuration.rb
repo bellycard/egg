@@ -54,6 +54,17 @@ module Egg
       end
     end
 
+    # You may pass a block to docker_run to read the output in a controlled manner.
+    def docker_run(app, command)
+      print "docker-compose run #{app} #{command}\n"
+      Open3.popen2(%(docker-compose run #{app} #{command})) do |_input, output, wait_thread|
+        output_read = output.read
+        print output_read + "\n"
+        yield output_read if block_given?
+        wait_thread.value.success? || raise(StandardError, "docker_run exited with #{wait_thread.value.to_i}")
+      end
+    end
+
     def run_setup
       write_docker_files
 
