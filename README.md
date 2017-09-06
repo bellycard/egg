@@ -14,7 +14,7 @@ Maintainers:
 * [Jason Sisk](https://github.com/sisk)
 
 This gem is currently heavily focused on Ruby and Rails projects relevant within 
-the Belly organization. The eventual goal is for this to become language and 
+the Hatch organization. The eventual goal is for this to become language and 
 framework agnostic, though the configuration language will be Ruby. 
 
 ## Installation
