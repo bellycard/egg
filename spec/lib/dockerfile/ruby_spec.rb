@@ -7,14 +7,14 @@ RSpec.describe Egg::Dockerfile::Ruby do
 
   it "Can render from a template" do
     df = Egg::Dockerfile.use "Ruby"
-    df.command = ["bin/rails", "server", "-p 3000"]
+    df.command = "bin/rails server -p 3000"
     df.ruby_version = "2.4.0"
     expect(df.render).to match(/FROM ruby/)
   end
 
   it "Requires setting the ruby_version" do
     df = Egg::Dockerfile.use "Ruby"
-    df.command = ["bin/rails", "server", "-p 3000"]
+    df.command = "bin/rails server -p 3000"
     expect { df.render }.to raise_error(Egg::Dockerfile::MissingPropertyError)
       .with_message(/ruby_version/)
   end
@@ -24,5 +24,12 @@ RSpec.describe Egg::Dockerfile::Ruby do
     df.ruby_version = "2.4.0"
     expect { df.render }.to raise_error(Egg::Dockerfile::MissingPropertyError)
       .with_message(/command/)
+  end
+
+  it "Renders the command at the end" do
+    df = Egg::Dockerfile.use "Ruby"
+    df.command = "bin/rails server -p 3000"
+    df.ruby_version = "2.4.0"
+    expect(df.render).to match(%r{CMD bin/rails server -p 3000$})
   end
 end

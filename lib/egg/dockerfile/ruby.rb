@@ -29,7 +29,8 @@ module Egg
           [:add, "Gemfile* $APP_HOME/"],
           [:env, "BUNDLE_GEMFILE=$APP_HOME/Gemfile BUNDLE_JOBS=4 BUNDLE_WITHOUT=production:staging"],
           [:run, "bundle install"],
-          [:add, ". $APP_HOME"]
+          [:add, ". $APP_HOME"],
+          [:cmd, "<%= command %>"]
         ]
       end
     end
