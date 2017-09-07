@@ -18,7 +18,8 @@ module Egg
           raise(MissingPropertyError, "Must populate #{attr}") if send(attr).nil?
         end
 
-        unrendered_output = template.reduce("") do |out, (command, string)|
+        final_template = template << [:cmd, "<%= command %>"]
+        unrendered_output = final_template.reduce("") do |out, (command, string)|
           out << command.to_s.upcase << " " << string << "\n"
         end
 

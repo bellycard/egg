@@ -25,8 +25,7 @@ module Egg
           [:add, "package.json $APP_HOME/"],
           [:add, "yarn.lock $APP_HOME/"],
           [:run, "yarn install"],
-          [:add, ". $APP_HOME"],
-          [:cmd, "<%= command %>"]
+          [:add, ". $APP_HOME"]
         ]
       end
     end
