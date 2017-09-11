@@ -30,4 +30,31 @@ RSpec.describe Egg::Dockerfile do
       expect(df.render).to match(/^RUN echo before bundling\nRUN bundle install$/)
     end
   end
+
+  describe "command" do
+    it "Appends the command at the end" do
+      df = Egg::Dockerfile.use("Ruby")
+      df.command = "test"
+      df.ruby_version = "2.3.3"
+      expect(df.render).to match(/CMD test$/)
+    end
+  end
+
+  describe "#env" do
+    it "Appends a ENV directive" do
+      df = Egg::Dockerfile.use("Ruby")
+      df.command = "test"
+      df.ruby_version = "2.3.3"
+      df.env(FOO: "ENV SET")
+      expect(df.render).to match(/ENV FOO="ENV SET"/)
+    end
+
+    it "May append multiple vars" do
+      df = Egg::Dockerfile.use("Ruby")
+      df.command = "test"
+      df.ruby_version = "2.3.3"
+      df.env(FOO: "ENV SET", bar: "SetAnother123")
+      expect(df.render).to match(/ENV FOO="ENV SET" BAR="SetAnother123"/)
+    end
+  end
 end

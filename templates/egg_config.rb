@@ -8,6 +8,7 @@ Egg::Configuration.new do |config|
   # self.dockerfile = Dockerfile.use "Ruby"
   # self.dockerfile.ruby_version = "2.4.0"
   # self.dockerfile.command = "bin/rails server -p 3000"
+  # self.dockerfile.env(dotenv.env)
 
   # Example docker_compose config:
   # app = config.docker_compose.service "app"
