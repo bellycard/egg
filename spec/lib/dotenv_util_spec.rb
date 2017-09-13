@@ -31,6 +31,13 @@ RSpec.describe DotenvUtil do
       expect(banananess).to eq "YES"
     end
 
+    it "Doesn't mess up by putting an extra quote around the val" do
+      util = DotenvUtil.new(env_text)
+      new_env = util.generate_env
+      color = new_env.match(/^FAVORITE_COLOR="(?<color>.*)"$/)[:color]
+      expect(color).to eq("RED")
+    end
+
     it "Has no problem when the has no values" do
       empty_envs = <<-EOF
         NOTHING=
