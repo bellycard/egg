@@ -2,13 +2,25 @@
 
 # Provides Generic support for manipulating Dotenv files
 class DotenvUtil
-  ENV_LINE_PATTERN = /^ # A line
-    (?<key>[A-Z_]+) # Beginning with al alphanumeric key
-    =               # Then an equals sign
-    (?<quot>"|')?   # Possibly a quote sign
-    (?<val>[^"']+)? # The value, anything other than quote signs
-    (\g<quot>)?     # If there was a quote sign, match its partner
-    $/x # End of line (x = allow free spacing)
+
+  # Retrieved from https://github.com/bkeepers/dotenv/blob/master/lib/dotenv/parser.rb
+  LINE = /
+      \A
+      \s*
+      (?:export\s+)?    # optional export
+      ([\w\.]+)         # key
+      (?:\s*=\s*|:\s+?) # separator
+      (                 # optional value begin
+        '(?:\'|[^'])*'  #   single quoted value
+        |               #   or
+        "(?:\"|[^"])*"  #   double quoted value
+        |               #   or
+        [^#\n]+         #   unquoted value
+      )?                # value end
+      \s*
+      (?:\#.*)?         # optional comment
+      \z
+    /x
 
   attr_reader :env_text, :env
   def initialize(env_file)
@@ -22,7 +34,8 @@ class DotenvUtil
 
   def generate_env
     env.collect do |key, val|
-      %(#{key}="#{val}")
+      val = %("#{val}") if val =~ /\s/
+      "#{key}=#{val}"
     end.join("\n")
   end
 
@@ -30,9 +43,9 @@ class DotenvUtil
 
   def parse_env_file
     env_text.split.each_with_object({}) do |line, hash|
-      match = line.match(ENV_LINE_PATTERN)
+      match = line.match(LINE)
       next unless match
-      hash.store(match[:key], match[:val])
+      hash.store(*match.captures)
       hash
     end
   end

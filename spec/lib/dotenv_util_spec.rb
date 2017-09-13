@@ -13,13 +13,12 @@ RSpec.describe DotenvUtil do
   end
 
   describe "#generate_env" do
-    it "Replaces an env variable in the file with a given string" do
+    it "Replaces an env variable in the file with a given string, quoting if necessary" do
       util = DotenvUtil.new(env_text)
       util.set("FAVORITE_FOOD", "FILET MIGNON")
       new_env = util.generate_env
 
-      favorite_food = new_env.match(/^FAVORITE_FOOD="(?<env>.*)"$/)[:env]
-      expect(favorite_food).to eq "FILET MIGNON"
+      expect(new_env).to match /FAVORITE_FOOD="FILET MIGNON"\s/
     end
 
     it "Sets a new env variable which doesn't exist in the file" do
@@ -27,15 +26,13 @@ RSpec.describe DotenvUtil do
       util.set("BANANA", "YES")
       new_env = util.generate_env
 
-      banananess = new_env.match(/^BANANA="(?<env>.*)"$/)[:env]
-      expect(banananess).to eq "YES"
+      expect(new_env).to match /BANANA=YES/
     end
 
     it "Doesn't mess up by putting an extra quote around the val" do
       util = DotenvUtil.new(env_text)
       new_env = util.generate_env
-      color = new_env.match(/^FAVORITE_COLOR="(?<color>.*)"$/)[:color]
-      expect(color).to eq("RED")
+      expect(new_env).to match /FAVORITE_COLOR="RED"\s/
     end
 
     it "Has no problem when the has no values" do
