@@ -2,6 +2,26 @@
 
 # Provides Generic support for manipulating Dotenv files
 class DotenvUtil
+
+  # Retrieved from https://github.com/bkeepers/dotenv/blob/master/lib/dotenv/parser.rb
+  LINE = /
+      \A
+      \s*
+      (?:export\s+)?    # optional export
+      ([\w\.]+)         # key
+      (?:\s*=\s*|:\s+?) # separator
+      (                 # optional value begin
+        '(?:\'|[^'])*'  #   single quoted value
+        |               #   or
+        "(?:\"|[^"])*"  #   double quoted value
+        |               #   or
+        [^#\n]+         #   unquoted value
+      )?                # value end
+      \s*
+      (?:\#.*)?         # optional comment
+      \z
+    /x
+
   attr_reader :env_text, :env
   def initialize(env_file)
     @env_text = env_file
@@ -14,7 +34,8 @@ class DotenvUtil
 
   def generate_env
     env.collect do |key, val|
-      %(#{key}="#{val}")
+      val = %("#{val}") if val =~ /\s/
+      "#{key}=#{val}"
     end.join("\n")
   end
 
@@ -22,7 +43,7 @@ class DotenvUtil
 
   def parse_env_file
     env_text.split.each_with_object({}) do |line, hash|
-      match = line.match(/^([A-Z_]+)="?(.+)?"?$/)
+      match = line.match(LINE)
       next unless match
       hash.store(*match.captures)
       hash

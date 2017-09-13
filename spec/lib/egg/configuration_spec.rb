@@ -17,9 +17,7 @@ RSpec.describe Egg::Configuration do
       env_util.set("DATABASE_URL", database_url)
       update_env_file = env_util.generate_env
 
-      written_db_url = update_env_file
-                       .match(/^DATABASE_URL="(?<url>.*)"$/)[:url]
-      expect(written_db_url).to eq(database_url)
+      expect(update_env_file).to match %r{DATABASE_URL=postgres://egg:postgreswins@db/egg_database}
     end
   end
 end
