@@ -23,22 +23,43 @@ module Egg
         ERB.new(unrendered_output).result(binding)
       end
 
-      def run(command, before: [:cmd])
-        template.insert(do_before(before), [:run, command])
+      def run(command, before: [:cmd], after: nil)
+        insert_with_before_after([:run, command], before: before, after: after)
       end
 
-      def env(env_hash)
+      def env(env_hash, **before_after)
         env_string = env_hash.reduce("") do |out, (key, value)|
           out << key.to_s.upcase << '="' << value.to_s << '" '
         end
-        template << [:env, env_string]
+        insert_with_before_after([:env, env_string], before_after)
+      end
+
+      def add(localpath, containerpath, **before_after)
+        directive = [:add, localpath + " " + containerpath]
+        insert_with_before_after(directive, before_after)
       end
 
       private
 
+      def insert_with_before_after(directive, before: nil, after: nil)
+        if before
+          template.insert(do_before(before), directive)
+        elsif after
+          template.insert(do_after(after) + 1, directive)
+        else
+          template << directive
+        end
+      end
+
       def do_before(before)
         template.index(before) ||
           template.index { |tc| tc[0] == before[0] } ||
+          -1
+      end
+
+      def do_after(after)
+        template.index(after) ||
+          template.index { |tc| tc[0] == after[0] } ||
           -1
       end
 
