@@ -43,23 +43,17 @@ module Egg
 
       def insert_with_before_after(directive, before: nil, after: nil)
         if before
-          template.insert(do_before(before), directive)
+          template.insert(find_directive_in_template(before), directive)
         elsif after
-          template.insert(do_after(after) + 1, directive)
+          template.insert(find_directive_in_template(after) + 1, directive)
         else
           template << directive
         end
       end
 
-      def do_before(before)
-        template.index(before) ||
-          template.index { |tc| tc[0] == before[0] } ||
-          -1
-      end
-
-      def do_after(after)
-        template.index(after) ||
-          template.index { |tc| tc[0] == after[0] } ||
+      def find_directive_in_template(directive)
+        template.index(directive) ||
+          template.index { |tc| tc[0] == directive[0] } ||
           -1
       end
 
