@@ -2,6 +2,13 @@ module Egg
   module Dockerfile
     # Provides shared behavior for dockerfile template classes.
     class Base
+      # Raise when before and after are both used at the same time.
+      class QuantumStateError < RuntimeError
+        def message
+          "Directives cannot happen both before and after a given directive"
+        end
+      end
+
       attr_reader :template
       attr_accessor :command
 
@@ -42,6 +49,7 @@ module Egg
       private
 
       def insert_with_before_after(directive, before: nil, after: nil)
+        raise(QuantumStateError) if before && after
         if before
           template.insert(find_directive_in_template(before), directive)
         elsif after

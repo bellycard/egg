@@ -36,6 +36,12 @@ RSpec.describe Egg::Dockerfile do
       df.run "echo before bundling", before: [:run, "bundle install"]
       expect(df.render).to match(/^RUN echo before bundling\nRUN bundle install$/)
     end
+
+    it "raises an exception if both before and after are specified" do
+      expect {
+        df.run "echo before bundling", before: [:run, "bundle install"], after: [:run, "bundle install"]
+      }.to raise_error(Egg::Dockerfile::Base::QuantumStateError)
+    end
   end
 
   describe "command" do
