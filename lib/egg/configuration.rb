@@ -35,7 +35,7 @@ module Egg
       self.ruby_version = "2.4"
       self.dotenv = DotenvUtil.new(File.read(".env.template"))
       instance_eval(&configuration_block)
-      self
+      self # rubocop:disable Lint/Void
     end
 
     def after_startup(&block)
@@ -69,7 +69,6 @@ module Egg
 
       docker_pull_build
       File.write(".env", dotenv.generate_env)
-      system("docker-compose up -d")
 
       run_after_startup
     end
