@@ -33,6 +33,7 @@ module Egg
     def setup
       config = Configuration.load "./egg_config.rb"
       config.run_setup
+      print "Use `docker-compose up` to start your application."
     end
 
     desc "build", "Just build the docker containers"
