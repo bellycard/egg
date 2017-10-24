@@ -74,8 +74,6 @@ module Egg
     end
 
     def write_docker_files
-      File.write("Dockerfile", dockerfile.render) if dockerfile
-
       dockerignore = Templates[".dockerignore"].result(binding)
       File.write(".dockerignore", dockerignore)
 
