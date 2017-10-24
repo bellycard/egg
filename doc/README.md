@@ -7,11 +7,12 @@ Egg makes it easy to set up a cluster of applications for local development, usi
 ```bash
 egg setup
 ```
-Once finished, the services will be running.
+Once finished, you may start the service with `docker-compose up`
 
 ### Stopping, Starting, Updating
 
 Most docker compose commands can apply to a single service if you follow the command with the service name (app, db)
+You may find this tool more pleasant to use if you `alias dc="docker-compose"`
 
 ```bash
 // Pause processes
@@ -30,6 +31,8 @@ docker-compose up -d
 docker-compose ps
 // Kill and remove all containers.
 docker-compose down
+// Kill other docker processes running elsewhere
+docker ps -q | xargs docker kill
 ```
 
 ### Getting into it
