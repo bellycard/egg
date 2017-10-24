@@ -5,6 +5,7 @@ module Egg
     class MissingPropertyError < StandardError; end
 
     def self.use(klass)
+      print "Dockerfile.use is deprecated. Egg setup will no longer write your dockerfile, please craft it yourself."
       const_get("Egg::Dockerfile::#{klass}").new
     rescue NameError
       raise(NoDockerfileError, "No Dockerfile subclass for #{klass}.")
