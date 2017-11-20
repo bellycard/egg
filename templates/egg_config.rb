@@ -5,11 +5,6 @@ Egg::Configuration.new do |config|
 
   # Example dockerfile config.
   # Available arguments for use: ["Ruby", "NodeJS"]
-  # self.dockerfile = Dockerfile.use "Ruby"
-  # self.dockerfile.ruby_version = "2.4.0"
-  # self.dockerfile.command = "bin/rails server -p 3000"
-  # self.dockerfile.env(dotenv.env)
-
   # Example docker_compose config:
   # app = config.docker_compose.service "app"
   # app.ports = ["3000:3000"]
