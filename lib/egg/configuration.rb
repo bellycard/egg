@@ -26,8 +26,7 @@ module Egg
                   :ssh_support,
                   :ruby_version,
                   :supervisor,
-                  :dotenv,
-                  :dockerfile
+                  :dotenv
 
     def initialize(&configuration_block)
       self.docker_compose = DockerCompose.new
