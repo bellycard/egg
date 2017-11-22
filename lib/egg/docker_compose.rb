@@ -9,6 +9,7 @@ class DockerCompose
 
   def initialize(_compose_config = {})
     @services = []
+    print "Use of docker_compose is deprecated. Please craft the docker-compose.yml file yourself. This module will be dropped in a future egg."
   end
 
   def configure

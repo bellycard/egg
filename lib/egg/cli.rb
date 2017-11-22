@@ -16,7 +16,6 @@ module Egg
       else
         File.write("egg_config.rb", config.result)
         print "Wrote example egg_config.rb, customize it to suit your app"
-        write_git_ignorance
       end
     end
 
@@ -41,16 +40,6 @@ module Egg
       config = Configuration.load "./egg_config.rb"
       config.write_docker_files
       config.docker_pull_build
-    end
-
-    private
-
-    def write_git_ignorance
-      gitignore = File.read(".gitignore")
-      gitignore << "Dockerfile\n" unless /^Dockerfile$/ =~ gitignore
-      gitignore << ".dockerignore\n" unless /^\.dockerignore$/ =~ gitignore
-      gitignore << "docker-compose.yml\n" unless /^docker-compose\.yml$/ =~ gitignore
-      File.write(".gitignore", gitignore)
     end
   end
 end
