@@ -38,7 +38,6 @@ module Egg
     desc "build", "Just build the docker containers"
     def build
       config = Configuration.load "./egg_config.rb"
-      config.write_docker_files
       config.docker_pull_build
     end
   end

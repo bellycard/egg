@@ -22,17 +22,13 @@ module Egg
       warn e.backtrace.join("\n")
     end
 
-    attr_accessor :docker_compose,
-                  :ssh_support,
-                  :ruby_version,
+    attr_accessor :ssh_support,
                   :supervisor,
                   :dotenv
 
     def initialize(&configuration_block)
-      self.docker_compose = DockerCompose.new
       self.ssh_support = false
-      self.ruby_version = "2.4"
-      self.dotenv = DotenvUtil.new(File.read(".env.template"))
+      self.dotenv = DotenvUtil.new(File.read(".env.template")) if File.exist?(".env.template")
       instance_eval(&configuration_block)
       self
     end
@@ -64,17 +60,8 @@ module Egg
     end
 
     def run_setup
-      write_docker_files
-
       docker_pull_build
-      File.write(".env", dotenv.generate_env)
-
       run_after_startup
-    end
-
-    def write_docker_files
-      dockerignore = Templates[".dockerignore"].result(binding)
-      File.write(".dockerignore", dockerignore)
     end
 
     def docker_pull_build
