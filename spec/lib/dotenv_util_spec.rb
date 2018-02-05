@@ -18,7 +18,7 @@ RSpec.describe DotenvUtil do
       util.set("FAVORITE_FOOD", "FILET MIGNON")
       new_env = util.generate_env
 
-      expect(new_env).to match /FAVORITE_FOOD="FILET MIGNON"\s/
+      expect(new_env).to match(/FAVORITE_FOOD="FILET MIGNON"\s/)
     end
 
     it "Sets a new env variable which doesn't exist in the file" do
@@ -26,13 +26,13 @@ RSpec.describe DotenvUtil do
       util.set("BANANA", "YES")
       new_env = util.generate_env
 
-      expect(new_env).to match /BANANA=YES/
+      expect(new_env).to match(/BANANA=YES/)
     end
 
     it "Doesn't mess up by putting an extra quote around the val" do
       util = DotenvUtil.new(env_text)
       new_env = util.generate_env
-      expect(new_env).to match /FAVORITE_COLOR="RED"\s/
+      expect(new_env).to match(/FAVORITE_COLOR="RED"\s/)
     end
 
     it "Has no problem when the has no values" do
